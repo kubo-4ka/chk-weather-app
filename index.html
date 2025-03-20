@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天気予報</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>天気予報</h1>
+        <div class="controls">
+            <label for="area">エリア選択:</label>
+            <select id="area"></select>
+            <button id="fetchWeather">予報取得</button>
+        </div>
+        <div id="weatherDisplay" class="weather-box">
+            <p>天気予報を取得中...</p>
+        </div>
+        <footer>
+            <p>
+                気象庁のjsonデータを利用した、可視化ツールです。<br><br>
+                公式の利用規約に従ってご利用ください。<br>
+                <a href="https://cio.go.jp/sites/default/files/uploads/documents/opendata_nijiriyou_betten1.pdf" target="_blank">政府標準利用規約</a><br><br>
+                このページの説明は以下の記事に記載します。<br>
+                <a href="https://qiita.com/kubo4ka/items/8fec35160d9f56347ea4" target="_blank">https://qiita.com/kubo4ka/items/8fec35160d9f56347ea4</a>
+            </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
