@@ -29,6 +29,32 @@ h1 {
     margin-bottom: 20px;
 }
 
+/* プルダウンの基本スタイル */
+select {
+    background-color: #333; /* 🔹 ダークグレーの背景 */
+    color: #fff; /* 🔹 白い文字 */
+    border: 1px solid #555; /* 🔹 ボーダーも暗めの色に */
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 16px;
+    appearance: none; /* 🔹 ブラウザ標準のスタイルを無効化 */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+/* プルダウンのリストのデザイン */
+select option {
+    background-color: #444; /* 🔹 プルダウンリストの背景を暗めに */
+    color: #fff; /* 🔹 文字色を白に */
+}
+
+/* フォーカス時のデザイン */
+select:focus {
+    outline: none;
+    border-color: #bb86fc; /* 🔹 選択中のボーダーカラー */
+    box-shadow: 0 0 5px #bb86fc; /* 🔹 軽く光らせる */
+}
+
 select, button {
     padding: 10px;
     font-size: 16px;
