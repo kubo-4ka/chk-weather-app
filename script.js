@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const areaSelect = document.getElementById("area");
     const fetchWeatherBtn = document.getElementById("fetchWeather");
     const weatherDisplay = document.getElementById("weatherDisplay");
+    const jsonDisplay = document.getElementById("jsonDisplay");
+    const jsonToggle = document.getElementById("jsonToggle");
+    const jsonTreeContainer = document.getElementById("jsonTree"); // JSONツリーの表示エリア
 
     let areaData = {}; // 全エリアデータ
     let currentAreaCode = "130000"; // 初期は東京都
@@ -24,7 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // 🔹 プルダウンを `offices` の一覧にする
     function updateAreaDropdown() {
         areaSelect.innerHTML = ""; // 既存オプションをクリア
-
         let options = [];
         Object.keys(areaData.offices).forEach(code => {
             // 🔹 エリアコードの下二桁が "00" の場合のみ追加
@@ -52,6 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(data => {
                 displayWeather(data);
+                displayJsonTree(data);
             })
             .catch(error => {
                 console.error("天気予報の取得に失敗しました:", error);
@@ -79,11 +82,73 @@ document.addEventListener("DOMContentLoaded", function () {
             for (let i = 0; i < timeSeries.timeDefines.length; i++) {
                 let date = new Date(timeSeries.timeDefines[i]);
                 let weather = area.weathers ? area.weathers[i] : "不明";
-                forecastHTML += `<p class="forecast-text">${date.toLocaleDateString()}: ${weather}</p>`;            }
+                forecastHTML += `<p class="forecast-text">${date.toLocaleDateString()}: ${weather}</p>`;
+            }
         });
 
         weatherDisplay.innerHTML = forecastHTML;
     }
+
+    function displayJsonTree(json) {
+        jsonTreeContainer.innerHTML = createJsonTree(json); // JSONツリーを挿入
+    }
+
+    function createJsonTree(json) {
+        if (typeof json !== "object" || json === null) {
+            return `<span class="json-value">${JSON.stringify(json)}</span>`;
+        }
+    
+        let html = `<ul class="json-tree">`;
+        for (const key in json) {
+            const value = json[key];
+            const hasChildren = typeof value === "object" && value !== null;
+    
+            html += `<li>
+                        <div class="json-item">
+                            ${hasChildren ? 
+                                `<span class="json-toggle-icon" onclick="toggleJsonNode(this)">➤</span>` :
+                                `<span class="json-no-toggle">•</span>`}
+                            <span class="json-key">${key}:</span>
+                            ${hasChildren ? "" : `<span class="json-value">${JSON.stringify(value)}</span>`}
+                        </div>
+                        ${hasChildren ? `<div class="json-node hidden">${createJsonTree(value)}</div>` : ""}
+                    </li>`;
+        }
+        html += `</ul>`;
+    
+        return html;
+    }
+    
+
+    window.toggleJsonNode = function (element) {
+        const node = element.parentNode.nextElementSibling; // 🔹 JSONノードの子要素を取得
+        if (node && node.classList.contains("json-node")) {
+            node.classList.toggle("hidden");
+    
+            // 🔹 三角形（➤ / ▼）の切り替え
+            element.textContent = node.classList.contains("hidden") ? "➤" : "▼";
+    
+            // 🔹 明示的に `display: block;` を適用
+            if (!node.classList.contains("hidden")) {
+                node.style.display = "block";
+            } else {
+                node.style.display = "none";
+            }
+        }
+    };
+    
+
+    jsonToggle.addEventListener("click", function () {
+        jsonDisplay.classList.toggle("hidden");
+        jsonToggle.textContent = jsonDisplay.classList.contains("hidden") ? "➤ 参考情報: 取得JSON" : "▼ 参考情報: 取得JSON";
+    
+        // 🔹 `jsonDisplay` の `display` を明示的に切り替え
+        if (!jsonDisplay.classList.contains("hidden")) {
+            jsonDisplay.style.display = "block";
+        } else {
+            jsonDisplay.style.display = "none";
+        }
+    });
 
     // 🔹 ボタンを無効化してAPI負荷を抑える
     function disableButtonForSeconds(seconds) {

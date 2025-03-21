@@ -62,6 +62,110 @@ button:disabled {
     color: #cccccc; /* 少し淡いグレーで目立ちすぎないように */
 }
 
+/* JSONブロックのデザイン */
+.json-toggle {
+    width: 95%;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 20px;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.json-box {
+    background-color: #333;  /* 🔹 背景を灰色に */
+    color: #ddd;
+    font-family: monospace;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+    max-height: 400px;  /* 🔹 高さを少し大きくする */
+    white-space: pre-wrap;
+    display: none;
+}
+
+/* JSONツリーのデザイン */
+.json-tree {
+    list-style-type: none;
+    padding-left: 0;
+    margin-left: 0;
+    text-align: left;
+}
+
+/* JSONのリスト項目（行間を詰める） */
+.json-tree li {
+    padding: 0;
+    margin: 0;
+    line-height: 1; /* 🔹 行の高さを最小限に */
+    display: flex;
+    align-items: start;
+}
+
+/* JSONのキーと値を同じ行に配置 */
+.json-item {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 1px 0;  /* 🔹 行間を最小限にする */
+    margin: 0;  /* 🔹 余白をなくす */
+}
+
+/* JSONのキー */
+.json-key {
+    font-weight: bold;
+    color: #bb86fc;
+    margin-right: 3px;  /* 🔹 余白を小さく */
+}
+
+/* JSONの値 */
+.json-value {
+    color: #aaf;
+    margin-left: 3px;  /* 🔹 余白を小さく */
+}
+
+/* ▶ / ▼ のアイコン */
+.json-toggle-icon {
+    cursor: pointer;
+    margin-right: 3px; /* 🔹 アイコンとキーの間隔を狭める */
+    font-size: 12px; /* 🔹 アイコンサイズを少し小さく */
+    color: #fff;
+    display: inline-block;
+    width: 12px;
+    text-align: center;
+}
+
+/* 展開できない場合の記号 */
+.json-no-toggle {
+    color: #888;
+    margin-right: 3px;
+    font-size: 12px;
+    width: 12px;
+    display: inline-block;
+    text-align: center;
+}
+
+/* JSONのネスト（子要素） */
+.json-node {
+    padding-left: 12px; /* 🔹 インデントを少し小さく */
+    margin-left: 0;
+    text-align: left;
+}
+
+/* JSONのリスト項目 */
+.json-tree li {
+    padding: 1px 0;  /* 🔹 リストの行間を詰める */
+    margin: 0;
+}
+
+/* 初期状態では非表示 */
+.hidden {
+    display: none;
+}
+
 footer {
     margin-top: 20px;
     font-size: 12px;
